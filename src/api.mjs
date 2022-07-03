@@ -2,8 +2,8 @@
 import assign from './assign.mjs'
 import defaultConverter from './converter.mjs'
 
-function init (converter, defaultAttributes) {
-  function set (name, value, attributes) {
+function init(converter, defaultAttributes) {
+  function set(name, value, attributes) {
     if (typeof document === 'undefined') {
       return
     }
@@ -47,7 +47,7 @@ function init (converter, defaultAttributes) {
       name + '=' + converter.write(value, name) + stringifiedAttributes)
   }
 
-  function get (name) {
+  function get(name, defaultValue = null) {
     if (typeof document === 'undefined' || (arguments.length && !name)) {
       return
     }
@@ -70,7 +70,7 @@ function init (converter, defaultAttributes) {
       } catch (e) {}
     }
 
-    return name ? jar[name] : jar
+    return name ? jar[name] : defaultValue
   }
 
   return Object.create(
@@ -82,7 +82,7 @@ function init (converter, defaultAttributes) {
           name,
           '',
           assign({}, attributes, {
-            expires: -1
+            expires: -1,
           })
         )
       },
@@ -91,11 +91,11 @@ function init (converter, defaultAttributes) {
       },
       withConverter: function (converter) {
         return init(assign({}, this.converter, converter), this.attributes)
-      }
+      },
     },
     {
       attributes: { value: Object.freeze(defaultAttributes) },
-      converter: { value: Object.freeze(converter) }
+      converter: { value: Object.freeze(converter) },
     }
   )
 }

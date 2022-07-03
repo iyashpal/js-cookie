@@ -110,6 +110,11 @@ QUnit.test('simple value', function (assert) {
   assert.strictEqual(Cookies.get('c'), 'v', 'should return value')
 })
 
+QUnit.test('default value', function (assert) {
+  assert.expect(1)
+  assert.strictEqual(Cookies.get('c', 1), 'v', 'should return default value')
+})
+
 QUnit.test('empty value', function (assert) {
   assert.expect(1)
   // IE saves cookies with empty string as "c; ", e.g. without "=" as opposed to EOMB, which
